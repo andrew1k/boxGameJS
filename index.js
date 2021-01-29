@@ -24,6 +24,8 @@ function startGame() {
 
 // generate random box in the game field 
 function renderBox() {
+    // to prevent to dublicate containers
+    $game.innerHTML = ''
     
     // create box in the game mode
     let smallBox = document.createElement('div')
