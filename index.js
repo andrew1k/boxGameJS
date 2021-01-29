@@ -3,7 +3,9 @@ let $start = document.querySelector('#start')
 
 // 
 let $game = document.querySelector('#game')
+
 let score = 0
+
 // action to start game when button is clicked
 $start.addEventListener('click', startGame) 
 
@@ -29,13 +31,26 @@ function renderBox() {
     
     // create box in the game mode
     let smallBox = document.createElement('div')
+
+    // generates random size to box
+    let boxSize = getRandom(30, 100)
+    console.log(boxSize) // random num from 30 to 100
+
+    // get info about game field 
+    let fieldSize = $game.getBoundingClientRect()
+    console.log(fieldSize) // DOMRect { x: 810, y: 72.5, width: 300, height: 300, top: 72.5, right: 1110, bottom: 372.5, left: 810 }
+
+    // create max top & max left sizes to generate a new boxes
+    let maxTop = fieldSize.height - boxSize
+    let maxLeft = fieldSize.width - boxSize
+
     // make styles for the box
-    smallBox.style.height = smallBox.style.width = '30px'
+    smallBox.style.height = smallBox.style.width = boxSize + 'px'
     smallBox.style.backgroundColor = 'red'
     smallBox.style.position = 'absolute'
     smallBox.style.cursor = 'pointer'
-    smallBox.style.top = '50px'
-    smallBox.style.left = '75px'
+    smallBox.style.top = getRandom(0, maxTop) + 'px'
+    smallBox.style.left = getRandom(0, maxLeft) + 'px'
     // allow understand when clicking in the game field where box
     smallBox.setAttribute('data-box', 'true')
 
@@ -45,7 +60,7 @@ function renderBox() {
 }
 
 function boxClick(event) {
-    // 38 line 
+    // 42 line 
     // if clicked on the box score++ and new box
     if (event.target.dataset) {
         score++
@@ -54,3 +69,7 @@ function boxClick(event) {
 }
 
 
+
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min) + min)
+}
