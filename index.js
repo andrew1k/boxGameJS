@@ -4,7 +4,14 @@ let $start = document.querySelector('#start')
 // 
 let $game = document.querySelector('#game')
 
+//
+let $time = document.querySelector('#time')
+
+//
 let score = 0
+
+// to check game status
+var isGameStarted = false
 
 // action to start game when button is clicked
 $start.addEventListener('click', startGame) 
@@ -18,6 +25,24 @@ function startGame() {
     $start.classList.add('hide')
     // make field white for game
     $game.style.backgroundColor = '#fff'
+
+    // Game started
+    isGameStarted = true
+
+
+    // set up timer
+    let interval = setInterval(function () {
+        var time = parseFloat($time.textContent)
+
+        if (time <= 0) {
+            // end game
+            clearInterval(interval)
+            endGame()
+        } else {
+            $time.textContent = (time - 0.1).toFixed(1)
+        }
+    }, 100)
+
 
     // add main game function
     renderBox()
@@ -60,7 +85,13 @@ function renderBox() {
 }
 
 function boxClick(event) {
-    // 42 line 
+    if (!isGameStarted) {
+        return
+    }
+    
+    
+    
+    // allow understand when clicking in the game field where is a box
     // if clicked on the box score++ and new box
     if (event.target.dataset) {
         score++
@@ -69,7 +100,14 @@ function boxClick(event) {
 }
 
 
-
+// to generate random sizes of boxes and position
 function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
+}
+
+
+
+// endGame function
+function endGame() {
+    isGameStarted = false
 }
