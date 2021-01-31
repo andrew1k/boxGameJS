@@ -109,5 +109,16 @@ function getRandom(min, max) {
 
 // endGame function
 function endGame() {
+    // return to the start position
     isGameStarted = false
+
+    // return start button
+    $start.classList.remove('hide')
+
+    // return backgroundColor to grey
+    $game.style.backgroundColor = '#ccc'
+
+    // remove from any boxes inside
+    $game.innerHTML = ''
 }
+
