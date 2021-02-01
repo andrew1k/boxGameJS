@@ -10,6 +10,18 @@ let $time = document.querySelector('#time')
 //
 let score = 0
 
+//
+let $timeHeader = document.querySelector('#time-header')
+
+//
+let $resultHeader = document.querySelector('#result-header')
+
+// 
+let $result = document.querySelector('#result')
+
+// 
+let $gameTime = document.querySelector('#game-time')
+
 // to check game status
 var isGameStarted = false
 
@@ -19,8 +31,19 @@ $start.addEventListener('click', startGame)
 
 $game.addEventListener('click', boxClick)
 
+// listen from input
+$gameTime.addEventListener('input', setGameTime)
+
+
 // actions for start button
 function startGame() {
+    // make 0 score for new game
+    score = 0
+
+    // for new game 
+    $timeHeader.classList.remove('hide')
+    $resultHeader.classList.add('hide') 
+
     // when button clicked we remove the button from field
     $start.classList.add('hide')
     // make field white for game
@@ -112,6 +135,9 @@ function endGame() {
     // return to the start position
     isGameStarted = false
 
+    // score
+    setGameScore() 
+
     // return start button
     $start.classList.remove('hide')
 
@@ -120,5 +146,25 @@ function endGame() {
 
     // remove from any boxes inside
     $game.innerHTML = ''
+
+    // remove time header to show score 
+    $timeHeader.classList.add('hide')
+
+    // show result
+    $resultHeader.classList.remove('hide')
+}
+
+
+
+// to return game score
+function setGameScore() {
+    $result.textContent = score.toString()
+}
+
+
+//
+function setTime() {
+  var time = +$gameTime.value
+  $time.textContent = time.toFixed(1)
 }
 
